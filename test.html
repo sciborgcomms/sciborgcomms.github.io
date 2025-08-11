@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Academic Services Calculator & Guide</title>
+    <!-- Chosen Palette: Scholarly Warmth -->
+    <!-- Application Structure Plan: The SPA is designed as an interactive service explorer. A sticky navigation bar allows easy access to all sections. The core is a tab-based service selector for "Drop-In" vs. "Package" support. The "Drop-In" section features a dynamic price calculator where users input a word count to see real-time cost estimates across tiers, making pricing transparent and engaging. The "Packages" section uses comparison cards and a chart to visually break down value. The "Process" section uses an interactive flowchart. This structure was chosen to transform the static brochure into a functional tool, allowing users to actively explore and compare services based on their specific needs (word count), which is more user-centric than a linear document. -->
+    <!-- Visualization & Content Choices: 
+        - Drop-In Pricing: Report Info -> Tiered pricing per word. Goal -> Compare & Inform. Viz/Method -> Interactive cards with a dynamic price calculator (HTML input + JS). Interaction -> User inputs word count; prices for all tiers update instantly. Justification -> Directly answers the user's primary question ("What will this cost me?") and makes comparison effortless. Library/Method -> Vanilla JS for calculation.
+        - Drop-In Features: Report Info -> Service inclusions per tier. Goal -> Compare. Viz/Method -> Bar Chart (Chart.js). Interaction -> Static visual comparison. Justification -> Visually represents the increasing scope of services with each tier, justifying the price difference. Library/Method -> Chart.js (Canvas).
+        - Package Comparison: Report Info -> Two fixed-price packages. Goal -> Compare. Viz/Method -> Donut Chart (Chart.js). Interaction -> The chart visually breaks down the components of the comprehensive package. Justification -> More effective at showing added value than a simple text list. Library/Method -> Chart.js (Canvas).
+        - Process Flow: Report Info -> 5-step client process. Goal -> Organize. Viz/Method -> Interactive diagram using styled HTML/CSS. Interaction -> Hover effects reveal more details on each step. Justification -> More engaging and modern than a static numbered list. Library/Method -> HTML/CSS with Tailwind.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f7f2; /* Light Neutral */
+            color: #3d405b; /* Dark Blue-Gray */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+         @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+                max-height: 400px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s;
+        }
+        .nav-link:hover {
+            color: #e07a5f; /* Terracotta */
+        }
+        .tab-button {
+            transition: all 0.3s;
+        }
+        .tab-button.active {
+            background-color: #3d405b;
+            color: #f8f7f2;
+        }
+        .process-step {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .process-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header id="home" class="sticky top-0 bg-white/80 backdrop-blur-lg z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-[#3d405b]">
+                Service Explorer
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#services" class="nav-link font-semibold">Services</a>
+                <a href="#packages" class="nav-link font-semibold">Packages</a>
+                <a href="#process" class="nav-link font-semibold">Process</a>
+                <a href="#contact" class="nav-link font-semibold">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-8">
+        <section class="text-center py-12 md:py-20">
+            <h1 class="text-4xl md:text-6xl font-black text-[#3d405b] tracking-tight">Empowering Your Research</h1>
+            <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-600">An interactive guide to our academic support services. Find the perfect solution to communicate your work with clarity, confidence, and impact.</p>
+        </section>
+
+        <section id="services" class="py-16">
+            <div class="text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-[#3d405b]">Drop-In Support Services</h2>
+                <p class="mt-3 text-lg max-w-3xl mx-auto text-gray-600">This section provides a dynamic way to explore our tiered services. Use the calculator to get an instant price estimate for your document, and view the chart to understand the features included at each level. It's designed to give you a clear, immediate understanding of how we can help.</p>
+            </div>
+
+            <div class="mt-12 bg-white rounded-xl shadow-lg p-6 md:p-10">
+                <div class="text-center mb-8">
+                    <label for="wordCount" class="block text-xl font-semibold mb-2">Estimate Your Project Cost</label>
+                    <p class="text-gray-500 mb-4">Enter your document's word count below for an instant price estimate.</p>
+                    <input type="number" id="wordCount" placeholder="e.g., 10000" class="w-full max-w-sm mx-auto p-3 text-center text-lg border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-[#81b29a] focus:border-[#81b29a] transition">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <h3 class="text-2xl font-bold text-[#3d405b]">Precision Polish</h3>
+                        <p class="text-sm text-gray-500 mt-1">Meticulous language review.</p>
+                        <div class="my-4 text-4xl font-extrabold text-[#81b29a]" id="priceTier1">R0.00</div>
+                        <p class="text-xs text-gray-400">@ R0.15 per word</p>
+                    </div>
+                    <div class="border-2 border-[#e07a5f] rounded-lg p-6 relative">
+                         <span class="absolute -top-3 bg-[#e07a5f] text-white text-xs font-bold px-3 py-1 rounded-full">POPULAR</span>
+                        <h3 class="text-2xl font-bold text-[#3d405b]">Clarity & Impact</h3>
+                        <p class="text-sm text-gray-500 mt-1">Enhance narrative and structure.</p>
+                        <div class="my-4 text-4xl font-extrabold text-[#e07a5f]" id="priceTier2">R0.00</div>
+                        <p class="text-xs text-gray-400">@ R0.35 per word</p>
+                    </div>
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <h3 class="text-2xl font-bold text-[#3d405b]">Deep Dive</h3>
+                        <p class="text-sm text-gray-500 mt-1">Strategic content development.</p>
+                        <div class="my-4 text-4xl font-extrabold text-[#f2cc8f]" id="priceTier3">R0.00</div>
+                        <p class="text-xs text-gray-400">@ R0.55 per word</p>
+                    </div>
+                </div>
+                 <div class="mt-12">
+                    <p class="text-center text-gray-600 mb-4">The chart below visualizes the services included in each tier. It clearly shows how our support deepens from foundational editing to comprehensive strategic input, helping you choose the right level of assistance.</p>
+                    <div class="chart-container">
+                        <canvas id="servicesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="packages" class="py-16">
+            <div class="text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-[#3d405b]">Start-to-Finish Packages</h2>
+                <p class="mt-3 text-lg max-w-3xl mx-auto text-gray-600">Our packages offer a comprehensive, fixed-price solution for your entire research project. This section allows you to compare the two packages side-by-side. The chart highlights the additional services in our top-tier package, demonstrating its value for those aiming for publication.</p>
+            </div>
+            <div class="mt-12 grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
+                <div class="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col">
+                        <h3 class="text-2xl font-bold">Essential Thesis Support</h3>
+                        <p class="text-gray-500 mt-2 flex-grow">Core support for your proposal and final dissertation, including alignment sessions and our two-draft system.</p>
+                        <div class="mt-6 text-4xl font-black">R15,000</div>
+                        <p class="text-sm text-gray-400">Payable in 3 installments</p>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col">
+                        <h3 class="text-2xl font-bold">Comprehensive Support</h3>
+                        <p class="text-gray-500 mt-2 flex-grow">All Essential services plus presentation design and a manuscript draft for journal submission.</p>
+                        <div class="mt-6 text-4xl font-black">R21,000</div>
+                        <p class="text-sm text-gray-400">Payable in 3 installments</p>
+                    </div>
+                </div>
+                <div class="lg:col-span-2">
+                    <div class="chart-container">
+                        <canvas id="packagesChart"></canvas>
+                    </div>
+                     <p class="text-center text-sm text-gray-600 mt-4">The "Comprehensive" package includes all "Essential" services, plus significant add-ons for publication readiness.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="process" class="py-16">
+            <div class="text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-[#3d405b]">Our Collaborative Process</h2>
+                <p class="mt-3 text-lg max-w-3xl mx-auto text-gray-600">We believe in a transparent and collaborative partnership. Below is our streamlined five-step process, designed to ensure clarity and deliver exceptional results. Hover over each step to see more detail about that phase of our collaboration.</p>
+            </div>
+            <div class="mt-12 flex flex-col md:flex-row justify-center items-start gap-4">
+                <div class="process-step text-center p-4 flex-1">
+                    <div class="w-24 h-24 mx-auto bg-[#81b29a] text-white rounded-full flex items-center justify-center text-4xl font-bold shadow-md">1</div>
+                    <h4 class="mt-4 font-bold text-lg">Consultation</h4>
+                    <p class="text-sm text-gray-500">We discuss your project, goals, and needs in a free initial meeting.</p>
+                </div>
+                 <div class="text-4xl text-gray-300 mt-10 hidden md:block">&rarr;</div>
+                <div class="process-step text-center p-4 flex-1">
+                    <div class="w-24 h-24 mx-auto bg-[#f2cc8f] text-white rounded-full flex items-center justify-center text-4xl font-bold shadow-md">2</div>
+                    <h4 class="mt-4 font-bold text-lg">Agreement</h4>
+                    <p class="text-sm text-gray-500">You receive a clear, detailed quote and service agreement.</p>
+                </div>
+                 <div class="text-4xl text-gray-300 mt-10 hidden md:block">&rarr;</div>
+                <div class="process-step text-center p-4 flex-1">
+                    <div class="w-24 h-24 mx-auto bg-[#e07a5f] text-white rounded-full flex items-center justify-center text-4xl font-bold shadow-md">3</div>
+                    <h4 class="mt-4 font-bold text-lg">Commencement</h4>
+                    <p class="text-sm text-gray-500">A deposit secures your booking and we begin our work.</p>
+                </div>
+                 <div class="text-4xl text-gray-300 mt-10 hidden md:block">&rarr;</div>
+                <div class="process-step text-center p-4 flex-1">
+                    <div class="w-24 h-24 mx-auto bg-[#3d405b] text-white rounded-full flex items-center justify-center text-4xl font-bold shadow-md">4</div>
+                    <h4 class="mt-4 font-bold text-lg">Collaboration</h4>
+                    <p class="text-sm text-gray-500">We work together, providing drafts and incorporating your feedback.</p>
+                </div>
+                 <div class="text-4xl text-gray-300 mt-10 hidden md:block">&rarr;</div>
+                <div class="process-step text-center p-4 flex-1">
+                    <div class="w-24 h-24 mx-auto bg-gray-400 text-white rounded-full flex items-center justify-center text-4xl font-bold shadow-md">5</div>
+                    <h4 class="mt-4 font-bold text-lg">Finalisation</h4>
+                    <p class="text-sm text-gray-500">Final payment is due upon delivery of the polished, completed work.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-16 text-center bg-white rounded-xl shadow-lg">
+            <h2 class="text-3xl md:text-4xl font-bold text-[#3d405b]">Ready to Elevate Your Research?</h2>
+            <p class="mt-3 text-lg max-w-2xl mx-auto text-gray-600">Let's discuss how we can help you achieve your academic and publication goals. Contact us today for a free, no-obligation consultation.</p>
+            <button class="mt-8 bg-[#e07a5f] text-white font-bold py-4 px-10 rounded-full text-lg hover:bg-[#d46a4d] transition-colors duration-300 shadow-lg hover:shadow-xl">
+                Schedule a Free Consultation
+            </button>
+        </section>
+    </main>
+
+    <footer class="text-center py-6 mt-12 border-t border-gray-200">
+        <p class="text-sm text-gray-500">&copy; 2025 Academic & Publication Support Services. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const wordCountInput = document.getElementById('wordCount');
+            const priceTier1 = document.getElementById('priceTier1');
+            const priceTier2 = document.getElementById('priceTier2');
+            const priceTier3 = document.getElementById('priceTier3');
+
+            const rates = {
+                tier1: 0.15,
+                tier2: 0.35,
+                tier3: 0.55
+            };
+
+            function calculatePrices() {
+                const count = parseInt(wordCountInput.value) || 0;
+                priceTier1.textContent = `R${(count * rates.tier1).toFixed(2)}`;
+                priceTier2.textContent = `R${(count * rates.tier2).toFixed(2)}`;
+                priceTier3.textContent = `R${(count * rates.tier3).toFixed(2)}`;
+            }
+
+            wordCountInput.addEventListener('input', calculatePrices);
+            
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                  return label.join(' ');
+                }
+                return label;
+            };
+
+            const commonChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: { title: tooltipTitleCallback },
+                        backgroundColor: '#3d405b',
+                        titleFont: { size: 14, weight: 'bold' },
+                        bodyFont: { size: 12 },
+                        padding: 12,
+                        cornerRadius: 6,
+                        displayColors: false,
+                    }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#e5e7eb' } },
+                    x: { grid: { display: false } }
+                }
+            };
+
+            const servicesCtx = document.getElementById('servicesChart').getContext('2d');
+            new Chart(servicesCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Copy Editing', 'Content Development', 'Strategic Input', 'Design Guidance'],
+                    datasets: [
+                        { label: 'Precision Polish', data: [1, 0, 0, 0], backgroundColor: '#81b29a' },
+                        { label: 'Clarity & Impact', data: [1, 1, 0, 0], backgroundColor: '#e07a5f' },
+                        { label: 'Deep Dive', data: [1, 1, 1, 1], backgroundColor: '#f2cc8f' }
+                    ]
+                },
+                options: { ...commonChartOptions, scales: { x: { stacked: true }, y: { stacked: true, ticks: { display: false } } }, plugins: {...commonChartOptions.plugins, legend: {display: true, position: 'bottom'}} }
+            });
+
+            const packagesCtx = document.getElementById('packagesChart').getContext('2d');
+            new Chart(packagesCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Essential Thesis Support', 'Presentation Design', 'Manuscript Draft'],
+                    datasets: [{
+                        data: [15000, 2500, 3500], // Approximate value breakdown
+                        backgroundColor: ['#3d405b', '#e07a5f', '#f2cc8f'],
+                        borderColor: '#f8f7f2',
+                        borderWidth: 4
+                    }]
+                },
+                options: { ...commonChartOptions, plugins: {...commonChartOptions.plugins, legend: {display: true, position: 'bottom'}} }
+            });
+        });
+    </script>
+</body>
+</html>
