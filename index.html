@@ -3,292 +3,366 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Academic Services Calculator & Guide</title>
-    <!-- Chosen Palette: Scholarly Warmth -->
-    <!-- Application Structure Plan: The SPA is designed as an interactive service explorer. A sticky navigation bar allows easy access to all sections. The core is a tab-based service selector for "Drop-In" vs. "Package" support. The "Drop-In" section features a dynamic price calculator where users input a word count to see real-time cost estimates across tiers, making pricing transparent and engaging. The "Packages" section uses comparison cards and a chart to visually break down value. The "Process" section uses an interactive flowchart. This structure was chosen to transform the static brochure into a functional tool, allowing users to actively explore and compare services based on their specific needs (word count), which is more user-centric than a linear document. -->
-    <!-- Visualization & Content Choices: 
-        - Drop-In Pricing: Report Info -> Tiered pricing per word. Goal -> Compare & Inform. Viz/Method -> Interactive cards with a dynamic price calculator (HTML input + JS). Interaction -> User inputs word count; prices for all tiers update instantly. Justification -> Directly answers the user's primary question ("What will this cost me?") and makes comparison effortless. Library/Method -> Vanilla JS for calculation.
-        - Drop-In Features: Report Info -> Service inclusions per tier. Goal -> Compare. Viz/Method -> Bar Chart (Chart.js). Interaction -> Static visual comparison. Justification -> Visually represents the increasing scope of services with each tier, justifying the price difference. Library/Method -> Chart.js (Canvas).
-        - Package Comparison: Report Info -> Two fixed-price packages. Goal -> Compare. Viz/Method -> Donut Chart (Chart.js). Interaction -> The chart visually breaks down the components of the comprehensive package. Justification -> More effective at showing added value than a simple text list. Library/Method -> Chart.js (Canvas).
-        - Process Flow: Report Info -> 5-step client process. Goal -> Organize. Viz/Method -> Interactive diagram using styled HTML/CSS. Interaction -> Hover effects reveal more details on each step. Justification -> More engaging and modern than a static numbered list. Library/Method -> HTML/CSS with Tailwind.
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    
+    <!-- SEO Meta Tags -->
+    <title>Masters & PhD Thesis and Publication Support in South Africa | SciBorg Communications</title>
+    <meta name="description" content="SciBorg Communications offers expert academic writing, editing, and publication support for Masters and PhD students in South Africa. We help turn your research into a high-quality thesis, dissertation, or publication.">
+    <meta name="keywords" content="academic writing, publication support, postgraduate, masters thesis, phd thesis, dissertation help, thesis editing, manuscript preparation, medical writing, scientific editing, South Africa, research publication">
+    <meta name="author" content="SciBorg Communications">
+    
+    <!-- Favicon Links -->
+    <link rel="icon" type="image/png" sizes="32x32" href="SciBorg Brain - favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="SciBorg Brain - favicon.png">
+
+    <!-- Open Graph Meta Tags (for social sharing on Facebook, LinkedIn, etc.) -->
+    <meta property="og:title" content="Masters & PhD Thesis and Publication Support | SciBorg Communications">
+    <meta property="og:description" content="Expert academic writing and publication support for Masters and PhD students in South Africa.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.sciborgcommunications.com"> <!-- Replace with your actual domain -->
+    <!-- <meta property="og:image" content="https://www.sciborgcommunications.com/og-image.jpg"> --> <!-- Add a link to a preview image -->
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Masters & PhD Thesis and Publication Support | SciBorg Communications">
+    <meta name="twitter:description" content="Expert academic writing and publication support for Masters and PhD students in South Africa.">
+    <!-- <meta name="twitter:image" content="https://www.sciborgcommunications.com/twitter-image.jpg"> --> <!-- Add a link to a preview image -->
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- JSON-LD Structured Data for Local Business -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "SciBorg Communications",
+      "telephone": "+27638423112",
+      "email": "admin@sciborgcommunications.com",
+      "description": "Affordable and expert academic writing, editing, and publication support for postgraduate medical and science students in South Africa.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "ZA"
+      },
+      "url": "https://www.sciborgcommunications.com", // Replace with your actual domain
+      "provider": {
+        "@type": "Person",
+        "name": "SciBorg Communications"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "South Africa"
+      }
+    }
+    </script>
+    
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f7f2; /* Light Neutral */
-            color: #3d405b; /* Dark Blue-Gray */
+            font-family: 'Ubuntu', sans-serif;
+            background-color: #fbfbf3;
+            color: #132239;
         }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 350px;
+        .hero-bg {
+            background-color: #132239; /* Official dark blue */
         }
-         @media (min-width: 768px) {
-            .chart-container {
-                height: 350px;
-                max-height: 400px;
-            }
+        .accent-color {
+            color: #ff9e3d; /* Official orange */
         }
-        .nav-link {
-            transition: color 0.3s;
+        .accent-bg {
+            background-color: #ff9e3d; /* Official orange */
         }
-        .nav-link:hover {
-            color: #e07a5f; /* Terracotta */
+        .accent-bg-hover:hover {
+            background-color: #e88b2a; /* Darker orange for hover */
         }
-        .tab-button {
-            transition: all 0.3s;
+        /* This class is now just a hook for the underline pseudo-element */
+        .section-title {} 
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: #ff9e3d; /* Official orange */
+            border-radius: 2px;
         }
-        .tab-button.active {
-            background-color: #3d405b;
-            color: #f8f7f2;
-        }
-        .process-step {
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .process-step:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        
+        section[id] {
+            scroll-margin-top: 100px; /* Adjust this value to match your header's height */
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="text-gray-700">
 
-    <header id="home" class="sticky top-0 bg-white/80 backdrop-blur-lg z-50 shadow-sm">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="text-2xl font-bold text-[#3d405b]">
-                Service Explorer
+    <!-- Header & Navigation -->
+    <header class="shadow-md sticky top-0 z-50" style="background-color: #fbfbf3;">
+        <nav class="container mx-auto px-6 py-2 flex justify-between items-center" aria-label="Main Navigation">
+            <a href="#" aria-label="Home">
+                <!-- Logo placeholder -->
+                <img src="SciBorg_logo.svg" alt="SciBorg Communications Logo" class="h-28 w-auto">
+            </a>
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#about" class="text-gray-600 hover:accent-color transition duration-300">About</a>
+                <a href="#services" class="text-gray-600 hover:accent-color transition duration-300">Services</a>
+                <a href="#process" class="text-gray-600 hover:accent-color transition duration-300">Our Process</a>
+                <a href="#contact" class="text-gray-600 hover:accent-color transition duration-300">Contact</a>
             </div>
-            <div class="hidden md:flex space-x-8">
-                <a href="#services" class="nav-link font-semibold">Services</a>
-                <a href="#packages" class="nav-link font-semibold">Packages</a>
-                <a href="#process" class="nav-link font-semibold">Process</a>
-                <a href="#contact" class="nav-link font-semibold">Contact</a>
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button id="menu-btn" type="button" class="z-40 block text-gray-800 hover:text-gray-600 focus:outline-none">
+                    <svg id="menu-open-icon" class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    <svg id="menu-close-icon" class="h-6 w-6 hidden" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 18L18 6M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
             </div>
         </nav>
+         <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full shadow-md" style="background-color: #fbfbf3;">
+            <a href="#about" class="mobile-menu-link block text-center text-gray-600 hover:bg-gray-200 py-4">About</a>
+            <a href="#services" class="mobile-menu-link block text-center text-gray-600 hover:bg-gray-200 py-4">Services</a>
+            <a href="#process" class="mobile-menu-link block text-center text-gray-600 hover:bg-gray-200 py-4">Our Process</a>
+            <a href="#contact" class="mobile-menu-link block text-center text-gray-600 hover:bg-gray-200 py-4">Contact</a>
+        </div>
     </header>
 
-    <main class="container mx-auto px-6 py-8">
-        <section class="text-center py-12 md:py-20">
-            <h1 class="text-4xl md:text-6xl font-black text-[#3d405b] tracking-tight">Empowering Your Research</h1>
-            <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-600">An interactive guide to our academic support services. Find the perfect solution to communicate your work with clarity, confidence, and impact.</p>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-bg text-white py-20 md-py-32">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4">From Proposal to Publication</h1>
+                <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-3xl mx-auto">We provide affordable, streamlined, and expert support to guide your research from a winning proposal to a high-impact publication.</p>
+                <div class="flex justify-center space-x-4">
+                    <a href="#contact" class="accent-bg text-[#132239] font-bold py-3 px-8 rounded-full accent-bg-hover transition duration-300">Contact for Pricing</a>
+                    <a href="#services" class="bg-white text-gray-800 font-bold py-3 px-8 rounded-full hover:bg-gray-200 transition duration-300">Our Services</a>
+                </div>
+            </div>
         </section>
 
-        <section id="services" class="py-16">
-            <div class="text-center">
-                <h2 class="text-3xl md:text-4xl font-bold text-[#3d405b]">Drop-In Support Services</h2>
-                <p class="mt-3 text-lg max-w-3xl mx-auto text-gray-600">This section provides a dynamic way to explore our tiered services. Use the calculator to get an instant price estimate for your document, and view the chart to understand the features included at each level. It's designed to give you a clear, immediate understanding of how we can help.</p>
-            </div>
-
-            <div class="mt-12 bg-white rounded-xl shadow-lg p-6 md:p-10">
-                <div class="text-center mb-8">
-                    <label for="wordCount" class="block text-xl font-semibold mb-2">Estimate Your Project Cost</label>
-                    <p class="text-gray-500 mb-4">Enter your document's word count below for an instant price estimate.</p>
-                    <input type="number" id="wordCount" placeholder="e.g., 10000" class="w-full max-w-sm mx-auto p-3 text-center text-lg border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-[#81b29a] focus:border-[#81b29a] transition">
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                    <div class="border border-gray-200 rounded-lg p-6">
-                        <h3 class="text-2xl font-bold text-[#3d405b]">Precision Polish</h3>
-                        <p class="text-sm text-gray-500 mt-1">Meticulous language review.</p>
-                        <div class="my-4 text-4xl font-extrabold text-[#81b29a]" id="priceTier1">R0.00</div>
-                        <p class="text-xs text-gray-400">@ R0.15 per word</p>
+        <!-- About Us Section -->
+        <section id="about" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-4xl md:text-5xl font-bold mb-6 text-center relative pb-4">Bridging the Gap from Proposal to Publication</h2>
+                <p class="text-lg mb-20 text-center max-w-3xl mx-auto text-gray-600">Brilliant research shouldn't stay on a hard drive. We saw that valuable work from South African Masters and PhD students often remains unpublished due to time and resource constraints. Drawing on our experience in global medical communications, SciBorg was founded to provide the expert support you need to get your work seen.</p>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="p-6">
+                        <div class="accent-bg text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" role="img" aria-labelledby="accelerateIconTitle"><title id="accelerateIconTitle">Icon representing speed</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Accelerate Your Timeline</h3>
+                        <p>We handle the time-consuming writing and admin, letting you focus on your core intellectual and scientific work.</p>
                     </div>
-                    <div class="border-2 border-[#e07a5f] rounded-lg p-6 relative">
-                         <span class="absolute -top-3 bg-[#e07a5f] text-white text-xs font-bold px-3 py-1 rounded-full">POPULAR</span>
-                        <h3 class="text-2xl font-bold text-[#3d405b]">Clarity & Impact</h3>
-                        <p class="text-sm text-gray-500 mt-1">Enhance narrative and structure.</p>
-                        <div class="my-4 text-4xl font-extrabold text-[#e07a5f]" id="priceTier2">R0.00</div>
-                        <p class="text-xs text-gray-400">@ R0.35 per word</p>
+                    <div class="p-6">
+                         <div class="accent-bg text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" role="img" aria-labelledby="qualityIconTitle"><title id="qualityIconTitle">Icon representing quality assurance</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Ensure Publication Quality</h3>
+                        <p>Our work strictly adheres to Good Publication Practice (GPP) guidelines, ensuring ethical, high-quality outputs.</p>
                     </div>
-                    <div class="border border-gray-200 rounded-lg p-6">
-                        <h3 class="text-2xl font-bold text-[#3d405b]">Deep Dive</h3>
-                        <p class="text-sm text-gray-500 mt-1">Strategic content development.</p>
-                        <div class="my-4 text-4xl font-extrabold text-[#f2cc8f]" id="priceTier3">R0.00</div>
-                        <p class="text-xs text-gray-400">@ R0.55 per word</p>
-                    </div>
-                </div>
-                 <div class="mt-12">
-                    <p class="text-center text-gray-600 mb-4">The chart below visualizes the services included in each tier. It clearly shows how our support deepens from foundational editing to comprehensive strategic input, helping you choose the right level of assistance.</p>
-                    <div class="chart-container">
-                        <canvas id="servicesChart"></canvas>
+                    <div class="p-6">
+                        <div class="accent-bg text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" role="img" aria-labelledby="supportIconTitle"><title id="supportIconTitle">Icon representing expert support</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Expert Writing Support</h3>
+                        <p>From proposal drafting and editing to journal submission, we support you at every stage.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="packages" class="py-16">
-            <div class="text-center">
-                <h2 class="text-3xl md:text-4xl font-bold text-[#3d405b]">Start-to-Finish Packages</h2>
-                <p class="mt-3 text-lg max-w-3xl mx-auto text-gray-600">Our packages offer a comprehensive, fixed-price solution for your entire research project. This section allows you to compare the two packages side-by-side. The chart highlights the additional services in our top-tier package, demonstrating its value for those aiming for publication.</p>
-            </div>
-            <div class="mt-12 grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
-                <div class="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col">
-                        <h3 class="text-2xl font-bold">Essential Thesis Support</h3>
-                        <p class="text-gray-500 mt-2 flex-grow">Core support for your proposal and final dissertation, including alignment sessions and our two-draft system.</p>
-                        <div class="mt-6 text-4xl font-black">R15,000</div>
-                        <p class="text-sm text-gray-400">Payable in 3 installments</p>
+        <!-- Services Section -->
+        <section id="services" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-4xl md:text-5xl font-bold mb-6 text-center relative pb-4">Our Academic Publication Services</h2>
+                <p class="text-lg mb-20 text-center max-w-3xl mx-auto text-gray-600">We offer a range of services tailored to your specific needs, from targeted drop-in support to comprehensive start-to-finish packages for your thesis or manuscript.</p>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Drop-in Support -->
+                    <div class="bg-white rounded-lg shadow-lg p-8 flex flex-col">
+                        <h3 class="text-2xl font-bold mb-4">Drop-in Support</h3>
+                        <p class="text-gray-600 mb-6 flex-grow">Perfect for targeted assistance on a specific document, whether it's a proposal, thesis chapter, or manuscript.</p>
+                        <ul class="text-left space-y-2 mb-6 flex-grow text-sm">
+                            <li class="flex items-start"><svg class="w-5 h-5 accent-color mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Copy Editing &amp; Structure</span></li>
+                            <li class="flex items-start"><svg class="w-5 h-5 accent-color mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Academic Tone &amp; Style Optimisation</span></li>
+                            <li class="flex items-start"><svg class="w-5 h-5 accent-color mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Table &amp; Figure Captions</span></li>
+                            <li class="flex items-start"><svg class="w-5 h-5 accent-color mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Content &amp; Lit Review Enhancement</span></li>
+                            <li class="flex items-start"><svg class="w-5 h-5 accent-color mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Draft Generation for Sections</span></li>
+                            <li class="flex items-start"><svg class="w-5 h-5 accent-color mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Citation &amp; Reference Formatting</span></li>
+                            <li class="flex items-start"><svg class="w-5 h-5 accent-color mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Reference Accuracy Check</span></li>
+                            <li class="flex items-start"><svg class="w-5 h-5 accent-color mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Argument &amp; Content Analysis</span></li>
+                            <li class="flex items-start"><svg class="w-5 h-5 accent-color mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Strategic Scientific Input</span></li>
+                            <li class="flex items-start"><svg class="w-5 h-5 accent-color mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Table &amp; Figure Design</span></li>
+                            <li class="flex items-start"><svg class="w-5 h-5 accent-color mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Strategic Alignment Call</span></li>
+                            <li class="flex items-start"><svg class="w-5 h-5 accent-color mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Plain Language Summary (PLS)</span></li>
+                        </ul>
+                        <p class="text-xs text-gray-500 mt-4 italic text-center">Services are grouped into tiers and are package-dependent. Contact us to find the right fit for your needs.</p>
+                        <a href="#contact" class="mt-4 accent-bg text-[#132239] font-bold py-2 px-4 rounded-full text-center accent-bg-hover transition duration-300">Request a Quote</a>
                     </div>
-                    <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col">
-                        <h3 class="text-2xl font-bold">Comprehensive Support</h3>
-                        <p class="text-gray-500 mt-2 flex-grow">All Essential services plus presentation design and a manuscript draft for journal submission.</p>
-                        <div class="mt-6 text-4xl font-black">R21,000</div>
-                        <p class="text-sm text-gray-400">Payable in 3 installments</p>
+                    <!-- Start-to-Finish -->
+                    <div class="bg-white rounded-lg shadow-lg p-8 flex flex-col">
+                        <h3 class="text-2xl font-bold mb-4">Start-to-Finish Packages</h3>
+                        <p class="text-gray-600 mb-6 flex-grow">All-inclusive, dedicated support for your entire research project, from proposal to final thesis or manuscript submission.</p>
+                         <ul class="text-left space-y-2 mb-6 flex-grow text-sm">
+                            <li class="flex items-start"><svg class="w-5 h-5 accent-color mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Full Scientific &amp; Writing Support</span></li>
+                            <li class="flex items-start"><svg class="w-5 h-5 accent-color mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Submission-Ready Proposal &amp; Thesis</span></li>
+                            <li class="flex items-start"><svg class="w-5 h-5 accent-color mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Alignment Calls at Each Stage</span></li>
+                            <li class="flex items-start"><svg class="w-5 h-5 accent-color mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Plain Language Summary (PLS)</span></li>
+                            <li class="flex items-start"><svg class="w-5 h-5 accent-color mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Proposal &amp; Thesis Defence Slide Decks</span></li>
+                            <li class="flex items-start"><svg class="w-5 h-5 accent-color mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Manuscript Draft Development</span></li>
+                        </ul>
+                        <p class="text-xs text-gray-500 mt-4 italic text-center">Services are package-dependent. Contact us for a detailed breakdown of our comprehensive packages.</p>
+                        <a href="#contact" class="mt-4 accent-bg text-[#132239] font-bold py-2 px-4 rounded-full text-center accent-bg-hover transition duration-300">Request a Quote</a>
                     </div>
-                </div>
-                <div class="lg:col-span-2">
-                    <div class="chart-container">
-                        <canvas id="packagesChart"></canvas>
+                    <!-- Graphics Support -->
+                    <div class="bg-white rounded-lg shadow-lg p-8 flex flex-col">
+                        <h3 class="text-2xl font-bold mb-4">Graphics & Design</h3>
+                        <p class="text-gray-600 mb-6 flex-grow">Transform your complex findings into clear, powerful visuals that get your research the attention it deserves.</p>
+                         <ul class="text-left space-y-2 mb-6 flex-grow">
+                            <li class="flex items-center"><svg class="w-5 h-5 accent-color mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Slide Deck Design</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 accent-color mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Conference Poster Design</li>
+                             <li class="flex items-center"><svg class="w-5 h-5 accent-color mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Infographic Design</li>
+                        </ul>
+                        <a href="#contact" class="mt-auto accent-bg text-[#132239] font-bold py-2 px-4 rounded-full text-center accent-bg-hover transition duration-300">Request a Quote</a>
                     </div>
-                     <p class="text-center text-sm text-gray-600 mt-4">The "Comprehensive" package includes all "Essential" services, plus significant add-ons for publication readiness.</p>
                 </div>
             </div>
         </section>
 
-        <section id="process" class="py-16">
-            <div class="text-center">
-                <h2 class="text-3xl md:text-4xl font-bold text-[#3d405b]">Our Collaborative Process</h2>
-                <p class="mt-3 text-lg max-w-3xl mx-auto text-gray-600">We believe in a transparent and collaborative partnership. Below is our streamlined five-step process, designed to ensure clarity and deliver exceptional results. Hover over each step to see more detail about that phase of our collaboration.</p>
-            </div>
-            <div class="mt-12 flex flex-col md:flex-row justify-center items-start gap-4">
-                <div class="process-step text-center p-4 flex-1">
-                    <div class="w-24 h-24 mx-auto bg-[#81b29a] text-white rounded-full flex items-center justify-center text-4xl font-bold shadow-md">1</div>
-                    <h4 class="mt-4 font-bold text-lg">Consultation</h4>
-                    <p class="text-sm text-gray-500">We discuss your project, goals, and needs in a free initial meeting.</p>
-                </div>
-                 <div class="text-4xl text-gray-300 mt-10 hidden md:block">&rarr;</div>
-                <div class="process-step text-center p-4 flex-1">
-                    <div class="w-24 h-24 mx-auto bg-[#f2cc8f] text-white rounded-full flex items-center justify-center text-4xl font-bold shadow-md">2</div>
-                    <h4 class="mt-4 font-bold text-lg">Agreement</h4>
-                    <p class="text-sm text-gray-500">You receive a clear, detailed quote and service agreement.</p>
-                </div>
-                 <div class="text-4xl text-gray-300 mt-10 hidden md:block">&rarr;</div>
-                <div class="process-step text-center p-4 flex-1">
-                    <div class="w-24 h-24 mx-auto bg-[#e07a5f] text-white rounded-full flex items-center justify-center text-4xl font-bold shadow-md">3</div>
-                    <h4 class="mt-4 font-bold text-lg">Commencement</h4>
-                    <p class="text-sm text-gray-500">A deposit secures your booking and we begin our work.</p>
-                </div>
-                 <div class="text-4xl text-gray-300 mt-10 hidden md:block">&rarr;</div>
-                <div class="process-step text-center p-4 flex-1">
-                    <div class="w-24 h-24 mx-auto bg-[#3d405b] text-white rounded-full flex items-center justify-center text-4xl font-bold shadow-md">4</div>
-                    <h4 class="mt-4 font-bold text-lg">Collaboration</h4>
-                    <p class="text-sm text-gray-500">We work together, providing drafts and incorporating your feedback.</p>
-                </div>
-                 <div class="text-4xl text-gray-300 mt-10 hidden md:block">&rarr;</div>
-                <div class="process-step text-center p-4 flex-1">
-                    <div class="w-24 h-24 mx-auto bg-gray-400 text-white rounded-full flex items-center justify-center text-4xl font-bold shadow-md">5</div>
-                    <h4 class="mt-4 font-bold text-lg">Finalisation</h4>
-                    <p class="text-sm text-gray-500">Final payment is due upon delivery of the polished, completed work.</p>
+        <!-- Process Section -->
+        <section id="process" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-4xl md:text-5xl font-bold mb-6 text-center relative pb-4">Our Collaborative Process</h2>
+                <p class="text-lg mb-20 text-center max-w-3xl mx-auto text-gray-600">We follow a simple, transparent process to ensure your project runs smoothly from start to finish.</p>
+                 <div class="max-w-5xl mx-auto">
+                    <div class="grid md:grid-cols-5 gap-8 relative">
+                        <div class="text-center">
+                            <div class="relative">
+                                <div class="mx-auto w-20 h-20 rounded-full accent-bg text-[#132239] flex items-center justify-center text-3xl font-bold shadow-lg">1</div>
+                            </div>
+                            <h3 class="mt-4 text-lg font-semibold">Consultation</h3>
+                            <p class="mt-2 text-sm text-gray-600">A free consultation to discuss your project and goals.</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="relative">
+                                <div class="mx-auto w-20 h-20 rounded-full accent-bg text-[#132239] flex items-center justify-center text-3xl font-bold shadow-lg">2</div>
+                            </div>
+                            <h3 class="mt-4 text-lg font-semibold">Agreement</h3>
+                            <p class="mt-2 text-sm text-gray-600">We provide a detailed quote and agreement for your approval.</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="relative">
+                                <div class="mx-auto w-20 h-20 rounded-full accent-bg text-[#132239] flex items-center justify-center text-3xl font-bold shadow-lg">3</div>
+                            </div>
+                            <h3 class="mt-4 text-lg font-semibold">Commencement</h3>
+                            <p class="mt-2 text-sm text-gray-600">Your deposit secures the booking and our work begins.</p>
+                        </div>
+                        <div class="text-center">
+                             <div class="relative">
+                                <div class="mx-auto w-20 h-20 rounded-full accent-bg text-[#132239] flex items-center justify-center text-3xl font-bold shadow-lg">4</div>
+                            </div>
+                            <h3 class="mt-4 text-lg font-semibold">Collaboration</h3>
+                            <p class="mt-2 text-sm text-gray-600">We draft, you review, and we revise to perfection.<br><span class="text-xs text-gray-500">(Feedback drafts are package dependent)</span></p>
+                        </div>
+                        <div class="text-center">
+                            <div class="relative">
+                                <div class="mx-auto w-20 h-20 rounded-full accent-bg text-[#132239] flex items-center justify-center text-3xl font-bold shadow-lg">5</div>
+                            </div>
+                            <h3 class="mt-4 text-lg font-semibold">Finalisation</h3>
+                            <p class="mt-2 text-sm text-gray-600">Final payment is due upon delivery of the completed project.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="py-16 text-center bg-white rounded-xl shadow-lg">
-            <h2 class="text-3xl md:text-4xl font-bold text-[#3d405b]">Ready to Elevate Your Research?</h2>
-            <p class="mt-3 text-lg max-w-2xl mx-auto text-gray-600">Let's discuss how we can help you achieve your academic and publication goals. Contact us today for a free, no-obligation consultation.</p>
-            <button class="mt-8 bg-[#e07a5f] text-white font-bold py-4 px-10 rounded-full text-lg hover:bg-[#d46a4d] transition-colors duration-300 shadow-lg hover:shadow-xl">
-                Schedule a Free Consultation
-            </button>
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="py-20 hero-bg">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-4xl md:text-5xl font-bold mb-6 text-center relative pb-4 text-white">What Our Clients Say</h2>
+                <p class="text-lg mb-20 text-center max-w-3xl mx-auto text-gray-300">We're proud to have helped researchers across South Africa achieve their goals.</p>
+                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div class="bg-white/10 p-8 rounded-lg shadow-lg">
+                        <p class="text-lg italic text-gray-200 leading-relaxed">"Gosh I wish I had found your company sooner!"</p>
+                        <p class="mt-4 font-bold text-gray-100 text-right">- MMed Student</p>
+                    </div>
+                    <div class="bg-white/10 p-8 rounded-lg shadow-lg">
+                        <p class="text-lg italic text-gray-200 leading-relaxed">"I've told all my colleagues about how amazing you guys are!"</p>
+                        <p class="mt-4 font-bold text-gray-100 text-right">- MMed Student</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="section-title text-4xl md:text-5xl font-bold mb-6 text-center relative pb-4">Ready to Finalise Your Thesis or Publication?</h2>
+                <p class="text-lg mb-20 text-center max-w-3xl mx-auto text-gray-600">Contact us today for a free consultation and a personalised quote. Let's turn your hard work into a submission-ready thesis or a high-impact publication.</p>
+                <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6">
+                    <a href="mailto:admin@sciborgcommunications.com" class="inline-flex items-center justify-center accent-bg text-[#132239] font-bold py-3 px-6 rounded-lg accent-bg-hover transition duration-300 w-full md:w-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                        Email Us
+                    </a>
+                    <a href="https://wa.me/27638423112" target="_blank" class="inline-flex items-center justify-center bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 transition duration-300 w-full md:w-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99 0-3.903-.52-5.586-1.456l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.451-4.437-9.887-9.888-9.888-5.451 0-9.887 4.436-9.888 9.888.001 2.228.651 4.315 1.731 6.086l.001.004 4.919 1.641.77.464zm12.383-7.564c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                        Chat on WhatsApp
+                    </a>
+                    <a href="tel:+27638423112" class="inline-flex items-center justify-center hero-bg text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-700 transition duration-300 w-full md:w-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                        Call Us
+                    </a>
+                </div>
+            </div>
         </section>
     </main>
 
-    <footer class="text-center py-6 mt-12 border-t border-gray-200">
-        <p class="text-sm text-gray-500">&copy; 2025 Academic & Publication Support Services. All Rights Reserved.</p>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-400 py-6">
+        <div class="container mx-auto px-6 text-center">
+             <div class="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-6 mb-4">
+                <a href="mailto:admin@sciborgcommunications.com" class="hover:text-white transition duration-300">admin@sciborgcommunications.com</a>
+                <span class="hidden md:inline">|</span>
+                <a href="tel:+27638423112" class="hover:text-white transition duration-300">+27 63 842 3112</a>
+            </div>
+            <p class="text-sm">&copy; <span id="year"></span> SciBorg Communications. All Rights Reserved.</p>
+        </div>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const wordCountInput = document.getElementById('wordCount');
-            const priceTier1 = document.getElementById('priceTier1');
-            const priceTier2 = document.getElementById('priceTier2');
-            const priceTier3 = document.getElementById('priceTier3');
+        // Hamburger Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const openIcon = document.getElementById('menu-open-icon');
+        const closeIcon = document.getElementById('menu-close-icon');
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
 
-            const rates = {
-                tier1: 0.15,
-                tier2: 0.35,
-                tier3: 0.55
-            };
+        const toggleMenu = () => {
+            mobileMenu.classList.toggle('hidden');
+            openIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+        };
 
-            function calculatePrices() {
-                const count = parseInt(wordCountInput.value) || 0;
-                priceTier1.textContent = `R${(count * rates.tier1).toFixed(2)}`;
-                priceTier2.textContent = `R${(count * rates.tier2).toFixed(2)}`;
-                priceTier3.textContent = `R${(count * rates.tier3).toFixed(2)}`;
-            }
+        menuBtn.addEventListener('click', toggleMenu);
 
-            wordCountInput.addEventListener('input', calculatePrices);
-            
-            const tooltipTitleCallback = (tooltipItems) => {
-                const item = tooltipItems[0];
-                let label = item.chart.data.labels[item.dataIndex];
-                if (Array.isArray(label)) {
-                  return label.join(' ');
+        // Close menu when a link is clicked
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (!mobileMenu.classList.contains('hidden')) {
+                    toggleMenu();
                 }
-                return label;
-            };
-
-            const commonChartOptions = {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        callbacks: { title: tooltipTitleCallback },
-                        backgroundColor: '#3d405b',
-                        titleFont: { size: 14, weight: 'bold' },
-                        bodyFont: { size: 12 },
-                        padding: 12,
-                        cornerRadius: 6,
-                        displayColors: false,
-                    }
-                },
-                scales: {
-                    y: { beginAtZero: true, grid: { color: '#e5e7eb' } },
-                    x: { grid: { display: false } }
-                }
-            };
-
-            const servicesCtx = document.getElementById('servicesChart').getContext('2d');
-            new Chart(servicesCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Copy Editing', 'Content Development', 'Strategic Input', 'Design Guidance'],
-                    datasets: [
-                        { label: 'Precision Polish', data: [1, 0, 0, 0], backgroundColor: '#81b29a' },
-                        { label: 'Clarity & Impact', data: [1, 1, 0, 0], backgroundColor: '#e07a5f' },
-                        { label: 'Deep Dive', data: [1, 1, 1, 1], backgroundColor: '#f2cc8f' }
-                    ]
-                },
-                options: { ...commonChartOptions, scales: { x: { stacked: true }, y: { stacked: true, ticks: { display: false } } }, plugins: {...commonChartOptions.plugins, legend: {display: true, position: 'bottom'}} }
-            });
-
-            const packagesCtx = document.getElementById('packagesChart').getContext('2d');
-            new Chart(packagesCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Essential Thesis Support', 'Presentation Design', 'Manuscript Draft'],
-                    datasets: [{
-                        data: [15000, 2500, 3500], // Approximate value breakdown
-                        backgroundColor: ['#3d405b', '#e07a5f', '#f2cc8f'],
-                        borderColor: '#f8f7f2',
-                        borderWidth: 4
-                    }]
-                },
-                options: { ...commonChartOptions, plugins: {...commonChartOptions.plugins, legend: {display: true, position: 'bottom'}} }
             });
         });
+
+
+        // Footer Year
+        document.getElementById('year').textContent = new Date().getFullYear();
     </script>
+
 </body>
 </html>
+
+
+
